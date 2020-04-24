@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Petugas &mdash; Bendi Car</title>
+	<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.css">
+</head>
+<body class="bg-secondary">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a href="/" class="navbar-brand text-bold">
+			<img src="/assets/img/logo3.png" alt="Logo Bendi Car" style="width: 40px;">	
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a href="/dashboard" class="nav-link">Dashboard</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a href="/peminjaman" class="nav-link">Peminjaman</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a href="/pengembalian" class="nav-link">Pengembalian</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a href="/penyewa" class="nav-link">Penyewa</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a href="/kendaraan" class="nav-link">Kendaraan</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a href="/denda" class="nav-link">Denda</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav">
+				<li class="nav-item active">
+					<a href="/petugas" class="nav-link">Petugas</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a href="/about" class="nav-link">About</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container">
+		<br>
+		<h2>DATA PETUGAS</h2>
+		<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#myModalAdd">ADD NEW</button>
+		<hr>
+		<table class="table table-dark" id="mytable">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>NAMA</th>
+					<th>EMAIL</th>
+					<th>PASSWORD</th>
+					<th>SEX</th>
+					<th>JABATAN</th>
+					<th>GAJI</th>
+					<th>OPSI</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each results}}
+				<tr>
+					<td>{{ id_petugas }}</td>
+					<td>{{ nama }}</td>
+					<td>{{ email }}</td>
+					<td>{{ password }}</td>
+					<td>{{ jk }}</td>
+					<td>{{ jabatan }}</td>
+					<td>{{ gaji }}</td>
+					<td>
+						<a href="javascript:void(0);" class="btn btn-sm btn-dark edit" data-id="{{ id_petugas }}" data-nama="{{ nama }}" data-email="{{ email }}" data-password="{{ password }}" data-jk="{{ jk }}" data-jabatan="{{ jabatan }}" data-gaji="{{ gaji }}">EDIT</a>
+						<a href="javascript:void(0)" class="btn btn-sm btn-dark delete" data-id="{{ id_petugas }}">DELETE</a>
+					</td>
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+
+	<!-- Add New Data-->
+	<form action="/save" method="POST">
+        <div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
+         <div class="modal-dialog" role="document">
+           <div class="modal-content bg-dark text-white">
+             <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">ADD NEW DATA</h5>
+               <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             <div class="modal-body">
+               <div class="form-group">
+                   <input type="text" name="id_petugas" class="form-control bg-transparent text-white" placeholder="ID" required>
+               </div>
+               <div class="form-group">
+                   <input type="text" name="nama" class="form-control bg-transparent text-white" placeholder="Nama" required>
+               </div>
+               <div class="form-group">
+                   <input type="email" name="email" class="form-control bg-transparent text-white" placeholder="Email" required>
+               </div>
+               <div class="form-group">
+                   <input type="password" name="password" class="form-control bg-transparent text-white" placeholder="Password" required>
+               </div>
+               <fieldset class="form-group">
+				    <div class="row">
+				      <div class="col-sm-10">
+				        <div class="form-check">
+				          <input class="form-check-input" type="radio" name="jk" id="laki-laki" value="L">
+				          <label class="form-check-label" for="laki-laki">
+				            Laki-Laki
+				          </label>
+				        </div>
+				        <div class="form-check">
+				          <input class="form-check-input" type="radio" name="jk" id="perempuan" value="P">
+				          <label class="form-check-label" for="perempuan">
+				            Perempuan
+				          </label>
+				        </div>
+				      </div>
+				    </div>
+				  </fieldset>
+               <div class="form-group">
+                   <input type="text" name="jabatan" class="form-control bg-transparent text-white" placeholder="Jabatan" required>
+               </div>
+               <div class="form-group">
+                   <input type="text" name="gaji" class="form-control bg-transparent text-white" placeholder="Gaji" required>
+               </div>
+             </div>
+             <div class="modal-footer">
+               <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-secondary">Save</button>
+             </div>
+           </div>
+         </div>
+        </div>
+	 </form>
+
+	 <!-- Update Data-->
+	<form action="/update" method="POST">
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
+         <div class="modal-dialog" role="document">
+           <div class="modal-content bg-dark text-white">
+             <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">UPDATE DATA</h5>
+               <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             <div class="modal-body">
+               <div class="form-group">
+                   <input type="text" name="id_petugas" class="form-control bg-transparent text-secondary id_petugas" placeholder="ID" disabled>
+               </div>
+               <div class="form-group">
+                   <input type="text" name="nama" class="form-control bg-transparent text-white nama" placeholder="Nama" required>
+               </div>
+               <div class="form-group"> 
+                   <input type="email" name="email" class="form-control bg-transparent text-white email" placeholder="Email" required>
+               </div>
+               <div class="form-group">
+                   <input type="password" name="password" class="form-control bg-transparent text-white password" placeholder="Password" required>
+               </div>
+               <fieldset class="form-group">
+				    <div class="row">
+				      <div class="col-sm-10">
+				        <div class="form-check">
+				          <input class="form-check-input jk" type="radio" name="jk" id="laki-laki" value="L">
+				          <label class="form-check-label" for="laki-laki">
+				            Laki-Laki
+				          </label>
+				        </div>
+				        <div class="form-check">
+				          <input class="form-check-input jk" type="radio" name="jk" id="perempuan" value="P">
+				          <label class="form-check-label" for="perempuan">
+				            Perempuan
+				          </label>
+				        </div>
+				      </div>
+				    </div>
+				  </fieldset>
+               <div class="form-group">
+                   <input type="text" name="jabatan" class="form-control bg-transparent text-white jabatan" placeholder="Jabatan" required>
+               </div>
+               <div class="form-group">
+                   <input type="text" name="gaji" class="form-control bg-transparent text-white gaji" placeholder="Gaji" required>
+               </div>
+             </div>
+             <div class="modal-footer">
+             	<input type="hidden" name="id" class="id_petugas">
+               <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-secondary">Update</button>
+             </div>
+           </div>
+         </div>
+        </div>
+	 </form>
+
+	<!-- Delete Product Modal-->
+ 	<form id="delete" action="/delete" method="POST">
+ 	     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ 	        <div class="modal-dialog">
+ 	           <div class="modal-content bg-dark text-white">
+ 	               <div class="modal-header">
+						<h5 class="modal-title" id="myModalLabel">DELETE DATA</h5>
+ 	                  	<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+ 	               </div>
+ 	               <div class="modal-body">
+						 <strong>Apakah Anda yakin?</strong>
+					</div>
+ 	               <div class="modal-footer">
+						<input type="hidden" name="id_petugas" class="form-control id_petugas2" required>
+ 	                   	<button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+ 	                  	<button type="submit" class="btn btn-secondary">Delete</button>
+ 	               </div>
+ 	      		</div>
+ 	        </div>
+ 	     </div>
+ 	 </form>
+
+	<script src="/assets/js/jquery-3.3.1.js"></script>
+	<script src="/assets/js/bootstrap.js"></script>
+	<script>
+	    $(document).ready(function(){
+			// Showing data to modal for edit record
+	      	$('#mytable').on('click','.edit',function(){
+		        var id_petugas = $(this).data('id');
+		        var nama = $(this).data('nama');
+		        var email = $(this).data('email');
+		        var password = $(this).data('password');
+		        var jk = $(this).data('jk');
+		        var jabatan = $(this).data('jabatan');
+		        var gaji = $(this).data('gaji');
+		        $('#editModal').modal('show');
+		        $('.id_petugas').val(id_petugas);
+		        $('.nama').val(nama);
+		        $('.email').val(email);
+		        $('.password').val(password);
+		        $('.jk').val(jk);
+		        $('.jabatan').val(jabatan);
+		        $('.gaji').val(gaji);
+	      	});
+	      
+			// Showing modal for delete record
+			$('#mytable').on('click','.delete',function(){
+		        var id_petugas = $(this).data('id');
+		        $('#deleteModal').modal('show');
+		        $('.id_petugas2').val(id_petugas);
+	      	});
+	    });
+	</script>
+</body>
+</html>
